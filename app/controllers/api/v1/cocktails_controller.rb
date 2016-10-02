@@ -10,8 +10,14 @@ module Api
       end
 
       def create
-
-      end
+        
+       cocktail = Cocktail.new(cocktail_params)
+       if cocktail.save
+         render json: cocktail
+       else
+         render json: {status: 500, err: 'cocktail could not be saved.'}
+       end
+     end
 
       def edit
 
@@ -23,6 +29,10 @@ module Api
 
       def destroy
 
+      end
+      private
+      def cocktail_params
+        params.require(:cocktail).permit(:name,:description,:instructions)
       end
     end
   end
